@@ -47,7 +47,7 @@ Crea un archivo playlists.txt en el directorio raíz del proyecto. Este archivo 
 https://open.spotify.com/playlist/playlist_id_1
 https://open.spotify.com/playlist/playlist_id_2
 ```
-
+![image](https://raw.githubusercontent.com/glmbxecurity/SpotiBOT/refs/heads/main/screenshots/playlists.jpeg)
  ### 4. Uso
 Una vez que hayas configurado todo, puedes ejecutar el script para que SpotiBOT recoja las canciones nuevas de las playlists y las agregue a la playlist mensual.
 
@@ -56,4 +56,9 @@ Ejecuta el script desde la terminal:
 ```bash
 python SpotiBOT.py
 ```
+
+ ### TROUBLESHOOTING
+ Si eliminas canciones por error y no querías, o eliminas la playlist, la manera de corregir y volver a empezar es eliminando la carpeta data (se genera al lanzar el programa), y eliminar el fichero global_traacks.txt
+
+ 
 
