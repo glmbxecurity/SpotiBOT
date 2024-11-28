@@ -149,7 +149,7 @@ def get_or_create_monthly_playlist(sp, user_id):
 # === Funcion selecion rango de antiguedad para la actualizacion de listas ===
 def seleccionar_rango_tiempo():
     """Mostrar un menú interactivo para seleccionar el rango de tiempo."""
-    print("Selecciona el rango de tiempo para recoger las novedades musicales:")
+    print("Agregar musica a la playlist que sea nueva de:")
     print("1. Los últimos 7 días")
     print("2. Los últimos 15 días")
     print("3. Los últimos 30 días")
