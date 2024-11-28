@@ -12,7 +12,10 @@ SpotiBOT es un bot para Spotify que facilita la gestión automática de playlist
 - **Historial de Canciones**: Mantiene un historial de las canciones ya procesadas para evitar duplicados.
 
  ## Screenshots del programa
-
+ #### EJECUCIÓN DEL PROGRAMA
+![image](https://raw.githubusercontent.com/glmbxecurity/SpotiBOT/refs/heads/main/screenshots/ejecucion.jpeg)
+ #### RESULTADO FINAL
+![image](https://raw.githubusercontent.com/glmbxecurity/SpotiBOT/refs/heads/main/screenshots/spotify.jpeg)
 ## Instalación
 
 Para usar SpotiBOT, primero necesitas tener Python 3.x (Probado en Python 3.13.0)
@@ -60,5 +63,5 @@ python SpotiBOT.py
  ### TROUBLESHOOTING
  Si eliminas canciones por error y no querías, o eliminas la playlist, la manera de corregir y volver a empezar es eliminando la carpeta data (se genera al lanzar el programa), y eliminar el fichero global_traacks.txt
 
- 
+
 
