@@ -49,10 +49,13 @@ def load_playlists(file_path="playlists.txt"):
 def get_playlist_tracks(sp, playlist_id):
     """Obtiene todas las canciones de una lista de reproducción."""
     tracks = []
-    results = sp.playlist_items(playlist_id)
-    while results:
-        tracks.extend(results['items'])
-        results = sp.next(results) if results['next'] else None
+    try:
+        results = sp.playlist_items(playlist_id)
+        while results:
+            tracks.extend(results['items'])
+            results = sp.next(results) if results['next'] else None
+    except spotipy.exceptions.SpotifyException as e:
+        print(f"Error al obtener canciones de la playlist {playlist_id}: {e}")
     return tracks
 
 def filter_new_tracks(old_tracks, current_tracks):
@@ -186,14 +189,40 @@ def main():
     print(f"Bienvenid@ {user_name}")
     print("\nCargando playlists...\n")
     
+def main():
+    sp = authenticate_spotify()
+    user_id = sp.current_user()["id"]
+    user_name = sp.current_user()["display_name"]  # Nombre del usuario
+
+    # === Bienvenida ===
+    print("SpotiBOT by GlmbXecurity")
+    print(f"Bienvenid@ {user_name}")
+    print("\nCargando playlists...\n")
+
     # === Cargar playlists desde el archivo ===
-    playlists = load_playlists("playlists.txt")  # Lee las playlists del archivo
+    try:
+        playlists = load_playlists("playlists.txt")  # Lee las playlists del archivo
+        if not playlists:  # Si no hay playlists en la lista
+            print("El archivo 'playlists.txt' no contiene playlists válidas.")
+            exit(1)  # Terminar el programa si no hay playlists
+    except FileNotFoundError:
+        print("El archivo 'playlists.txt' no se encontró. Por favor, créalo y agrega URLs de playlists.")
+        exit(1)
+    except Exception as e:
+        print(f"Ocurrió un error al cargar las playlists: {e}")
+        exit(1)
 
     # Mostrar nombres de las playlists
     print("Se están recogiendo las novedades de las siguientes playlists:")
     for playlist in playlists:
-        playlist_data = sp.playlist(playlist["id"])
-        print(f"- {playlist_data['name']}")
+        try:
+            # Intentar acceder a la playlist
+            playlist_data = sp.playlist(playlist["id"])
+            print(f"- {playlist_data['name']}               (ID: {playlist['id']})")
+        except spotipy.exceptions.SpotifyException as e:
+            # Manejar errores de forma elegante
+            print(f"Error al acceder a la playlist {playlist['id']}: {e}")
+            continue
 
     # Seleccionar el rango de tiempo
     dias_recientes = seleccionar_rango_tiempo()
@@ -230,7 +259,18 @@ def main():
 
     if final_tracks:
         # Agregar canciones finales a la lista mensual
-        sp.playlist_add_items(monthly_playlist_id, [track['track']['id'] for track in final_tracks])
+        # Dividir los tracks en lotes de máximo 100 elementos
+        batch_size = 100
+        track_ids = [track['track']['id'] for track in final_tracks]
+
+        for i in range(0, len(track_ids), batch_size):
+            batch = track_ids[i:i + batch_size]  # Sublista de hasta 100 tracks
+            try:
+                sp.playlist_add_items(monthly_playlist_id, batch)
+                print(f"Añadidos {len(batch)} tracks a la playlist.")
+            except spotipy.exceptions.SpotifyException as e:
+                print(f"Error al añadir tracks en el rango {i}-{i + batch_size - 1}: {e}")
+
 
         # Guardar en el registro global y el histórico local
         save_global_tracks([track['track']['id'] for track in final_tracks], global_tracks_path)

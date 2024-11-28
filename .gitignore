@@ -1,3 +1,5 @@
 
 config.txt
 .cache
+/data
+global_tracks.txt
