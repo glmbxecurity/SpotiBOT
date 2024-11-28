@@ -11,6 +11,8 @@ SpotiBOT es un bot para Spotify que facilita la gestión automática de playlist
 - **Soporte para múltiples playlists**: Puedes cargar varias playlists y agregar canciones a la playlist mensual.
 - **Historial de Canciones**: Mantiene un historial de las canciones ya procesadas para evitar duplicados.
 
+ ## Screenshots del programa
+
 ## Instalación
 
 Para usar SpotiBOT, primero necesitas tener Python 3.x (Probado en Python 3.13.0)
@@ -37,7 +39,7 @@ SPOTIPY_REDIRECT_URI=tu_redirect_uri
 ```
 
 Estos valores los puedes obtener creando una aplicación en Spotify Developer Dashboard.
-
+![image](https://raw.githubusercontent.com/glmbxecurity/SpotiBOT/refs/heads/main/screenshots/config.jpeg)
  ### 3. Crear el archivo playlists.txt
 Crea un archivo playlists.txt en el directorio raíz del proyecto. Este archivo debe contener las URL de las playlists de las que deseas obtener las canciones, una por línea. Por ejemplo:
 
@@ -46,4 +48,12 @@ https://open.spotify.com/playlist/playlist_id_1
 https://open.spotify.com/playlist/playlist_id_2
 ```
 
+ ### 4. Uso
+Una vez que hayas configurado todo, puedes ejecutar el script para que SpotiBOT recoja las canciones nuevas de las playlists y las agregue a la playlist mensual.
+
+Ejecuta el script desde la terminal:
+
+```bash
+python SpotiBOT.py
+```
 
