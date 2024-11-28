@@ -62,8 +62,6 @@ python SpotiBOT.py
 
  ### TROUBLESHOOTING
 
-En ocasiones, el script no funciona a la 1ª, basta con ejecutarlo por segunda vez para que funcione.
-
  Si eliminas canciones por error y no querías, o eliminas la playlist, la manera de corregir y volver a empezar es eliminando la carpeta data (se genera al lanzar el programa), y eliminar el fichero global_traacks.txt
 
 
