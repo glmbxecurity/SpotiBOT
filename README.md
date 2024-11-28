@@ -61,7 +61,8 @@ python SpotiBOT.py
 ```
 
  ### TROUBLESHOOTING
-Para ejecutar la opción de "Los últimos 30 días", previamente has de haber sincronizado al menos los ultimos 7 o 15 días, sino Spotify detecta muchas requests de una vez y rechaza la petición.
+Para ejecutar la opción de "Los últimos 30 días", previamente has de haber sincronizado al menos los ultimos 7 o 15 días, sino Spotify detecta muchas requests de una vez y rechaza la petición.  
+
  Si eliminas canciones por error y no querías, o eliminas la playlist, la manera de corregir y volver a empezar es eliminando la carpeta data (se genera al lanzar el programa), y eliminar el fichero global_traacks.txt
 
 
