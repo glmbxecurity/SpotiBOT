@@ -61,7 +61,7 @@ def filter_new_tracks(old_tracks, current_tracks):
     new_tracks = [track for track in current_tracks if track['track'] and track['track']['id'] not in old_ids]
     return new_tracks
 
-def filter_recent_tracks(new_tracks, days=7):
+def filter_recent_tracks(new_tracks, days):
     """Filtra canciones añadidas a la lista en los últimos X días."""
     recent_tracks = []
     now = datetime.datetime.now(datetime.timezone.utc)
@@ -74,6 +74,8 @@ def filter_recent_tracks(new_tracks, days=7):
             recent_tracks.append(track)
 
     return recent_tracks
+
+
 
 def filter_duplicate_tracks(new_tracks, global_track_ids):
     """Filtra canciones que ya están en el registro global."""
@@ -141,6 +143,37 @@ def get_or_create_monthly_playlist(sp, user_id):
 
     return new_playlist['id'], playlist_name
 
+# === Funcion selecion rango de antiguedad para la actualizacion de listas ===
+def seleccionar_rango_tiempo():
+    """Mostrar un menú interactivo para seleccionar el rango de tiempo."""
+    print("Selecciona el rango de tiempo para recoger las novedades musicales:")
+    print("1. Los últimos 7 días")
+    print("2. Los últimos 15 días")
+    print("3. Los últimos 30 días")
+    print("4. Personalizado (introduce el número de días)")
+    
+    opcion = input("Introduce el número de tu elección: ")
+    
+    if opcion == "1":
+        return 7
+    elif opcion == "2":
+        return 15
+    elif opcion == "3":
+        return 30
+    elif opcion == "4":
+        while True:
+            try:
+                dias_personalizados = int(input("Introduce el número de días: "))
+                if dias_personalizados <= 0:
+                    print("Por favor, introduce un número positivo.")
+                else:
+                    return dias_personalizados
+            except ValueError:
+                print("Por favor, introduce un número válido.")
+    else:
+        print("Opción no válida. Seleccionando por defecto los últimos 7 días.")
+        return 7  # Valor por defecto si no se elige una opción válida
+
 
 # === Función Principal ===
 def main():
@@ -152,15 +185,18 @@ def main():
     print("SpotiBOT by GlmbXecurity")
     print(f"Bienvenid@ {user_name}")
     print("\nCargando playlists...\n")
-
+    
     # === Cargar playlists desde el archivo ===
     playlists = load_playlists("playlists.txt")  # Lee las playlists del archivo
 
     # Mostrar nombres de las playlists
-    print("Se están recogiendo las novedades de la última semana de las siguientes playlists:")
+    print("Se están recogiendo las novedades de las siguientes playlists:")
     for playlist in playlists:
         playlist_data = sp.playlist(playlist["id"])
         print(f"- {playlist_data['name']}")
+
+    # Seleccionar el rango de tiempo
+    dias_recientes = seleccionar_rango_tiempo()
 
     # Cargar el registro global
     global_tracks_path = "global_tracks.txt"
@@ -181,7 +217,7 @@ def main():
 
         current_tracks = get_playlist_tracks(sp, playlist["id"])
         new_tracks = filter_new_tracks(old_tracks, current_tracks)
-        recent_tracks = filter_recent_tracks(new_tracks)
+        recent_tracks = filter_recent_tracks(new_tracks, dias_recientes)  # Usar el rango de días seleccionado
         unique_tracks = filter_duplicate_tracks(recent_tracks, global_track_ids)
 
         all_new_tracks.extend(unique_tracks)
@@ -213,3 +249,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
