@@ -54,7 +54,7 @@ pip install python-dotenv
 Clona el repositorio de GitHub en tu máquina local:
 
 
-`git clone https://github.com/tu_usuario/SpotiBOT.git` 
+`git clone https://github.com/glmbxecurity/SpotiBOT.git` 
 
 ### 2. Configuración
 
@@ -137,7 +137,7 @@ pip install python-dotenv
 
 Clone the GitHub repository to your local machine:
 
-`git clone https://github.com/your_user/SpotiBOT.git` 
+`git clone https://github.com/glmbxecurity/SpotiBOT.git` 
 
 ### 2. Configuration
 
