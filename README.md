@@ -1,11 +1,20 @@
-# SpotiBOT by GlmbXecurity
+``# SpotiBOT by GlmbXecurity
 
 ##### ES
 SpotiBOT es un bot para Spotify que facilita la gestión automática de playlists, agregando nuevas canciones de manera eficiente y organizada. Está diseñado para recolectar canciones nuevas de varias playlists y agregarlas a una playlist mensual creada específicamente para ello. Utiliza la API de Spotify para interactuar con las playlists y las canciones.
 
+**Novedades:**
+- **Soporte para imágenes personalizadas**: Ahora puedes añadir una imagen personalizada para tus playlists. La imagen debe tener un tamaño máximo de **500x500 px** y un peso de **100 KB**. Para utilizar una imagen personalizada, simplemente coloca la imagen con el nombre del género (por ejemplo, `rock.jpg`) en la carpeta `images` y el bot la asignará automáticamente.
+- **Creación de playlists por género**: Se ha añadido la opción de crear playlists basadas en géneros musicales. Al ejecutar el bot, puedes indicar un género (por ejemplo, `rock`) y el bot creará una nueva playlist con ese género y añadirá canciones correspondientes a ese estilo.
+
 ----------
+
 ##### EN
 SpotiBOT is a Spotify bot that facilitates the automatic management of playlists, efficiently and systematically adding new songs. It is designed to collect new tracks from multiple playlists and add them to a monthly playlist specifically created for this purpose. It uses the Spotify API to interact with playlists and tracks.
+
+**New Features:**
+- **Custom Image Support**: You can now add a custom image for your playlists. The image must be a maximum of **500x500 px** and **100 KB** in size. To use a custom image, simply place an image with the genre name (e.g., `rock.jpg`) in the `images` folder and the bot will automatically assign it to the playlist.
+- **Genre-based Playlist Creation**: A new feature has been added to create playlists based on musical genres. When running the bot, you can specify a genre (e.g., `rock`), and the bot will create a new playlist with that genre and add tracks related to that style.
 
 ----------
 
@@ -27,6 +36,8 @@ SpotiBOT is a Spotify bot that facilitates the automatic management of playlists
 -   **Playlist Mensual Automática**: Crea y/o actualiza una playlist mensual con las canciones nuevas del mes, asignando un nombre basado en el mes y el año.
 -   **Soporte para múltiples playlists**: Puedes cargar varias playlists y agregar canciones a la playlist mensual.
 -   **Historial de Canciones**: Mantiene un historial de las canciones ya procesadas para evitar duplicados.
+-   **Soporte para Imágenes Personalizadas**: Ahora puedes agregar imágenes personalizadas a las playlists. Asegúrate de que la imagen sea de tamaño **500x500 px** y **100 KB** como máximo. Coloca las imágenes en la carpeta `images` y el bot las utilizará automáticamente para la playlist correspondiente.
+-   **Creación de Playlists Basadas en Género**: Ahora se pueden crear playlists específicas para cada género musical. El bot crea una nueva playlist basada en el género especificado y agrega canciones que coincidan con ese género.
 
 ## Screenshots del programa
 
@@ -43,7 +54,6 @@ SpotiBOT is a Spotify bot that facilitates the automatic management of playlists
 Para usar SpotiBOT, primero necesitas tener Python 3.x (Probado en Python 3.13.0)  
 Luego debes instalar `spotipy` y `python-dotenv`
 
-
 ```bash
 pip install spotipy
 pip install python-dotenv
@@ -53,12 +63,12 @@ pip install python-dotenv
 
 Clona el repositorio de GitHub en tu máquina local:
 
-
-`git clone https://github.com/glmbxecurity/SpotiBOT.git` 
+`git clone https://github.com/glmbxecurity/SpotiBOT.git`
 
 ### 2. Configuración
 
 Antes de ejecutar el programa, necesitas configurar las credenciales de la API de Spotify. Para ello, crea un archivo `config.txt` en el directorio raíz del proyecto con la siguiente estructura:
+
 
 ```bash
 SPOTIPY_CLIENT_ID=tu_client_id
@@ -72,27 +82,40 @@ Estos valores los puedes obtener creando una aplicación en [Spotify Developer D
 
 ### 3. Crear el archivo `playlists.txt`
 
-Crea un archivo `playlists.txt` en el directorio raíz del proyecto. Este archivo debe contener las URL de las playlists de las que deseas obtener las canciones, una por línea. Por ejemplo:
+Crea un archivo `playlists.txt` en el directorio raíz del proyecto. Este archivo debe contener las URL de las playlists de las que deseas obtener las canciones, **una por línea**. Además, puedes asociar cada playlist con un género musical especificando el género al final de la URL, separado por un espacio.
 
-`https://open.spotify.com/playlist/playlist_id_1` 
+Ejemplo del formato en `playlists.txt`:
+
+```bash
+https://open.spotify.com/playlist/playlist_id_1 rock
+https://open.spotify.com/playlist/playlist_id_2 pop
+https://open.spotify.com/playlist/playlist_id_3 jazz
+``` 
+
+En este ejemplo, la primera playlist se asociará con el género **rock**, la segunda con **pop**, y la tercera con **jazz**. El bot utilizará esta información para crear playlists basadas en géneros y asignar imágenes personalizadas (si están disponibles) para cada género.
 
 ![image](https://raw.githubusercontent.com/glmbxecurity/SpotiBOT/refs/heads/main/screenshots/playlists.jpeg)
 
-### 4. Uso
+### 4. Crear Imágenes Personalizadas para las Playlists (Opcional)
 
-Una vez que hayas configurado todo, puedes ejecutar el script para que SpotiBOT recoja las canciones nuevas de las playlists y las agregue a la playlist mensual.
+Si deseas usar una imagen personalizada para tu playlist, coloca las imágenes en la carpeta `images` dentro del directorio del proyecto. La imagen debe tener el nombre del género correspondiente, por ejemplo: `rock.jpg` o `pop.jpg`. La imagen debe ser de tamaño **500x500 px** y un peso máximo de **100 KB**.
+
+### 5. Uso
+
+Una vez que hayas configurado todo, puedes ejecutar el script para que SpotiBOT recoja las canciones nuevas de las playlists y las agregue a la playlist mensual. Además, si decides crear playlists basadas en géneros, el bot lo hará automáticamente.
 
 Ejecuta el script desde la terminal:
 
-`python SpotiBOT.py` 
+`python SpotiBOT.py`
 
 ### Resolucion de problemas
 
-* Hay ciertas playlists que, por algún motivo, no es capaz de leer, ya sea porque son privadas o porque necesiten de algún permiso especial. Hasta que se dé con la solución, esas playlists se deben de omitir para evitar fallos.
-
-* Para ejecutar la opción de "Los últimos 30 días", previamente has de haber sincronizado al menos los últimos 7 o 15 días, sino Spotify detecta muchas requests de una vez y rechaza la petición.
-
-* Si eliminas canciones por error y no querías, o eliminas la playlist, la manera de corregir y volver a empezar es eliminando la carpeta `data` (se genera al lanzar el programa), y eliminar el fichero `global_tracks.txt`.
+-   Hay ciertas playlists que, por algún motivo, no es capaz de leer, ya sea porque son privadas o porque necesiten de algún permiso especial. Hasta que se dé con la solución, esas playlists se deben de omitir para evitar fallos.
+    
+-   Para ejecutar la opción de "Los últimos 30 días", previamente has de haber sincronizado al menos los últimos 7 o 15 días, sino Spotify detecta muchas requests de una vez y rechaza la petición.
+    
+-   Si eliminas canciones por error y no querías, o eliminas la playlist, la manera de corregir y volver a empezar es eliminando la carpeta `data` (se genera al lanzar el programa), y eliminar el fichero `global_tracks.txt`.
+    
 
 ----------
 
@@ -112,6 +135,8 @@ Ejecuta el script desde la terminal:
 -   **Automatic Monthly Playlist**: Creates and/or updates a monthly playlist with the new songs from the month, assigning a name based on the month and year.
 -   **Support for Multiple Playlists**: You can load multiple playlists and add songs to the monthly playlist.
 -   **Song History**: Keeps track of songs already processed to avoid duplicates.
+-   **Custom Image Support**: You can add custom images to playlists. Make sure the image is **500x500 px** and **100 KB** or less. Place the images in the `images` folder, and the bot will use them for the corresponding playlist.
+-   **Genre-based Playlist Creation**: The bot now creates genre-specific playlists. You can specify a genre (e.g., `rock`), and the bot will create a new playlist for that genre and add tracks accordingly.
 
 ## Program Screenshots
 
@@ -128,16 +153,18 @@ Ejecuta el script desde la terminal:
 To use SpotiBOT, you first need to have Python 3.x (Tested on Python 3.13.0)  
 Then, install `spotipy` and `python-dotenv`
 
-```bash
-pip install spotipy
-pip install python-dotenv
-``` 
+bash
+
+Copiar código
+
+`pip install spotipy
+pip install python-dotenv` 
 
 ### 1. Clone the repository
 
 Clone the GitHub repository to your local machine:
 
-`git clone https://github.com/glmbxecurity/SpotiBOT.git` 
+`git clone https://github.com/glmbxecurity/SpotiBOT.git`
 
 ### 2. Configuration
 
@@ -155,24 +182,36 @@ You can get these values by creating an app in [Spotify Developer Dashboard](htt
 
 ### 3. Create the `playlists.txt` file
 
-Create a `playlists.txt` file in the root directory of the project. This file should contain the URLs of the playlists you want to get songs from, one per line. For example:
+Create a `playlists.txt` file in the root directory of the project. This file should contain the URLs of the playlists you want to get songs from, **one per line**, and you can also associate a genre to each playlist by writing it after the URL.
 
-`https://open.spotify.com/playlist/playlist_id_1` 
+Example format in `playlists.txt`:
 
-![image](https://raw.githubusercontent.com/glmbxecurity/SpotiBOT/refs/heads/main/screenshots/playlists.jpeg)
+```bash
+https://open.spotify.com/playlist/playlist_id_1 rock
+https://open.spotify.com/playlist/playlist_id_2 pop
+https://open.spotify.com/playlist/playlist_id_3 jazz
+``` 
 
-### 4. Usage
+In this example, the first playlist is associated with the **rock** genre, the second with **pop**, and the third with **jazz**. The bot will use this information to create genre-based playlists and assign custom images (if available).
 
-Once everything is configured, you can run the script for SpotiBOT to collect new songs from the playlists and add them to the monthly playlist.
+
+### 4. Create Custom Playlist Images (Optional)
+
+If you want to use a custom image for your playlist, place the images in the `images` folder inside the project directory. The image should be named according to the genre, for example: `rock.jpg` or `pop.jpg`. The image should be **500x500 px** and **100 KB** or less.
+
+### 5. Usage
+
+Once everything is configured, you can run the script for SpotiBOT to collect new songs from the playlists and add them to the monthly playlist. Additionally, if you choose to create genre-based playlists, the bot will handle that automatically.
 
 Run the script from the terminal:
 
-`python SpotiBOT.py` 
+`python SpotiBOT.py`
 
 ### Troubleshooting
 
-* Some playlists might not be accessible, either because they are private or require special permissions. Until a solution is found, those playlists should be omitted to avoid errors.
-
-* To use the "Last 30 Days" option, you must have already synced at least the last 7 or 15 days, otherwise Spotify detects too many requests at once and rejects the request.
-
-* If you accidentally delete songs or playlists, you can reset everything by deleting the `data` folder (generated when you run the program), and remove the `global_tracks.txt` file.
+-   Some playlists might not be accessible, either because they are private or require special permissions. Until a solution is found, those playlists should be omitted to avoid errors.
+    
+-   To use the "Last 30 Days" option, you must have already synced at least the last 7 or 15 days, otherwise Spotify detects too many requests at once and rejects the request.
+    
+-   If you accidentally delete songs or playlists, you can reset everything by deleting the `data` folder (generated when you run the program), and removing the `global_tracks.txt` file.
+    

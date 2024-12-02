@@ -4,7 +4,69 @@ import datetime
 from datetime import timedelta
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
+import base64
+from spotipy.exceptions import SpotifyException
 
+# === Función para cargar playlists desde un archivo ===
+def load_playlists(file_path="playlists.txt"):
+    """Carga las playlists desde un archivo y extrae sus URLs y géneros."""
+    file_path = os.path.join(os.path.dirname(__file__), file_path)  # Ruta basada en el script
+    if not os.path.exists(file_path):
+        raise FileNotFoundError(f"El archivo '{file_path}' no existe.")
+    
+    playlists_by_genre = {}  # Diccionario para agrupar playlists por género
+    
+    with open(file_path, "r") as f:
+        for line in f:
+            parts = line.strip().split(" ")
+            if len(parts) < 2:  # Ignorar líneas mal formateadas
+                continue
+            url, genre = parts[0], parts[1]
+            if "playlist/" in url:
+                playlist_id = url.split("playlist/")[1].split("?")[0]  # Extraer ID sin parámetros
+                playlist_data = {"id": f"spotify:playlist:{playlist_id}", "url": url}
+                
+                if genre not in playlists_by_genre:
+                    playlists_by_genre[genre] = []
+                playlists_by_genre[genre].append(playlist_data)
+    
+    return playlists_by_genre
+
+# === Función para establecer la imagen de la playlist ===
+def set_playlist_image(sp, playlist_id, genre):
+    """
+    Establece una imagen para la playlist según el género. Si no encuentra
+    una imagen para el género, usa una imagen predeterminada.
+    """
+    # Convertir el nombre del género a un nombre de archivo
+    genre_image_name = f"{genre.lower().replace(' ', '_')}.jpg"
+    genre_image_path = os.path.join("images", genre_image_name)  # Carpeta "images" para almacenar imágenes
+    default_image_path = os.path.join("images", "spotibot.jpg")  # Imagen predeterminada
+
+    # Verificar si la imagen específica del género existe
+    if not os.path.exists(genre_image_path):
+        print(f"No se encontró imagen para el género '{genre}', buscando imagen predeterminada.")
+        if not os.path.exists(default_image_path):
+            print(f"Error: No se encontró la imagen predeterminada '{default_image_path}'.")
+            return  # Si no se encuentra la imagen predeterminada, salimos de la función
+        else:
+            print(f"Usando imagen predeterminada '{default_image_path}'.")
+            genre_image_path = default_image_path  # Usamos la imagen predeterminada si no hay imagen para el género
+
+    # Intentar abrir y cargar la imagen
+    try:
+        with open(genre_image_path, "rb") as image_file:
+            encoded_image = base64.b64encode(image_file.read()).decode("utf-8")
+            sp.playlist_upload_cover_image(playlist_id, encoded_image)  # Subir la imagen a la playlist
+            print(f"Imagen establecida para la playlist del género '{genre}' con éxito.")
+    except FileNotFoundError:
+        print(f"Error: La imagen '{genre_image_path}' no fue encontrada.")
+    except IOError as e:
+        print(f"Error al abrir la imagen '{genre_image_path}': {e}")
+    except SpotifyException as e:
+        print(f"Error al subir la imagen para la playlist {playlist_id}: {e}")
+    except Exception as e:
+        print(f"Ocurrió un error inesperado: {e}")
 
 # === Leer la configuración desde el fichero config.txt ===
 def load_config(file_path="config.txt"):
@@ -25,7 +87,7 @@ def authenticate_spotify():
         client_id=config["SPOTIPY_CLIENT_ID"],
         client_secret=config["SPOTIPY_CLIENT_SECRET"],
         redirect_uri=config["SPOTIPY_REDIRECT_URI"],
-        scope="playlist-read-private playlist-modify-private"
+        scope="playlist-read-private playlist-modify-private ugc-image-upload"  # Agregar 'ugc-image-upload'
     ))
     return sp
 
@@ -54,6 +116,50 @@ def load_playlists(file_path="playlists.txt"):
                 playlists_by_genre[genre].append(playlist_data)
     
     return playlists_by_genre
+# === Función para establecer la imagen de la playlist ===
+import os
+import base64
+import spotipy
+from spotipy.exceptions import SpotifyException
+
+def set_playlist_image(sp, playlist_id, genre):
+    """
+    Establece una imagen para la playlist según el género. Si no encuentra
+    una imagen para el género, usa una imagen predeterminada.
+    """
+    # Obtener la ruta absoluta de la carpeta donde se encuentra este archivo Python
+    script_dir = os.path.dirname(os.path.abspath(__file__))  # Carpeta del script
+
+    # Convertir el nombre del género a un nombre de archivo
+    genre_image_name = f"{genre.lower().replace(' ', '_')}.jpg"
+    genre_image_path = os.path.join(script_dir, "images", genre_image_name)  # Ruta correcta a la carpeta "images"
+    default_image_path = os.path.join(script_dir, "images", "spotibot.jpg")  # Imagen predeterminada
+
+    # Verificar si la imagen específica del género existe
+    if not os.path.exists(genre_image_path):
+        print(f"No se encontró imagen para el género '{genre}', buscando imagen predeterminada.")
+        if not os.path.exists(default_image_path):
+            print(f"Error: No se encontró la imagen predeterminada '{default_image_path}'.")
+            return  # Si no se encuentra la imagen predeterminada, salimos de la función
+        else:
+            print(f"Usando imagen predeterminada '{default_image_path}'.")
+            genre_image_path = default_image_path  # Usamos la imagen predeterminada si no hay imagen para el género
+
+    # Intentar abrir y cargar la imagen
+    try:
+        with open(genre_image_path, "rb") as image_file:
+            encoded_image = base64.b64encode(image_file.read()).decode("utf-8")
+            sp.playlist_upload_cover_image(playlist_id, encoded_image)  # Subir la imagen a la playlist
+            print(f"Imagen establecida para la playlist del género '{genre}' con éxito.")
+    except FileNotFoundError:
+        print(f"Error: La imagen '{genre_image_path}' no fue encontrada.")
+    except IOError as e:
+        print(f"Error al abrir la imagen '{genre_image_path}': {e}")
+    except SpotifyException as e:
+        print(f"Error al subir la imagen para la playlist {playlist_id}: {e}")
+    except Exception as e:
+        print(f"Ocurrió un error inesperado: {e}")
+
 
 # === Funciones de Manejo de Canciones ===
 def get_playlist_tracks(sp, playlist_id):
@@ -195,6 +301,7 @@ def seleccionar_rango_tiempo():
 
 
 # === Función Principal ===
+# === Función Principal ===
 def main():
     sp = authenticate_spotify()
     user_id = sp.current_user()["id"]
@@ -229,7 +336,10 @@ def main():
     for genre, playlists in playlists_by_genre.items():
         # Obtener o crear la lista para ese género
         genre_playlist_id, genre_playlist_name = get_or_create_genre_playlist(sp, user_id, genre)
-        
+
+        # Establecer imagen de la playlist basada en el género
+        set_playlist_image(sp, genre_playlist_id, genre)
+
         all_new_tracks = []
 
         # Obtener canciones de las playlists para ese género
@@ -271,6 +381,7 @@ def main():
 
     input("\nPresiona Enter para salir...")
 
-
 if __name__ == "__main__":
     main()
+
+
