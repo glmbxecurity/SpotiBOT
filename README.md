@@ -1,4 +1,4 @@
-``# SpotiBOT by GlmbXecurity
+# SpotiBOT by GlmbXecurity
 
 ##### ES
 SpotiBOT es un bot para Spotify que facilita la gestión automática de playlists, agregando nuevas canciones de manera eficiente y organizada. Está diseñado para recolectar canciones nuevas de varias playlists y agregarlas a una playlist mensual creada específicamente para ello. Utiliza la API de Spotify para interactuar con las playlists y las canciones.
