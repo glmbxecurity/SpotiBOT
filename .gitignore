@@ -3,3 +3,5 @@ config.txt
 .cache
 /data
 global_tracks.txt
+playlists.txt
+config.txt
