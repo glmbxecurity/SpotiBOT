@@ -6,7 +6,7 @@ SpotiBOT es un bot para Spotify que facilita la gestión automática de playlist
 **Novedades:**
 - **Soporte para imágenes personalizadas**: Ahora puedes añadir una imagen personalizada para tus playlists. La imagen debe tener un tamaño máximo de **500x500 px** y un peso de **100 KB**. Para utilizar una imagen personalizada, simplemente coloca la imagen con el nombre del género (por ejemplo, `rock.jpg`) en la carpeta `images` y el bot la asignará automáticamente.
 - **Creación de playlists por género**: Se ha añadido la opción de crear playlists basadas en géneros musicales. Al ejecutar el bot, puedes indicar un género (por ejemplo, `rock`) y el bot creará una nueva playlist con ese género y añadirá canciones correspondientes a ese estilo.
-
+- **BOT Telegram**. Bot de telegram para controlar el spotibot instalado en un servidor, de manera que puedas usarlo allá donde vayas.
 ----------
 
 ##### EN
@@ -15,6 +15,7 @@ SpotiBOT is a Spotify bot that facilitates the automatic management of playlists
 **New Features:**
 - **Custom Image Support**: You can now add a custom image for your playlists. The image must be a maximum of **500x500 px** and **100 KB** in size. To use a custom image, simply place an image with the genre name (e.g., `rock.jpg`) in the `images` folder and the bot will automatically assign it to the playlist.
 - **Genre-based Playlist Creation**: A new feature has been added to create playlists based on musical genres. When running the bot, you can specify a genre (e.g., `rock`), and the bot will create a new playlist with that genre and add tracks related to that style.
+- **Telegram Bot**: A Telegram bot to control SpotiBOT installed on a server, allowing you to use it wherever you go.
 
 ----------
 
@@ -205,7 +206,55 @@ Once everything is configured, you can run the script for SpotiBOT to collect ne
 
 Run the script from the terminal:
 
-`python SpotiBOT.py`
+`python SpotiBOT.py`  
+
+## Configuración y Uso de TelegramSpotiBOT
+
+### 1. CObtener el Token de Telegram
+
+Para interactuar con la API de Telegram, primero debes obtener el **Token** de tu bot en Telegram:
+
+1.  Abre Telegram y busca el **BotFather**.
+2.  Envía el comando `/newbot` y sigue las instrucciones para crear tu bot.
+3.  Una vez creado, **BotFather** te dará un Token que deberás copiar.
+
+### 2. Configurar el ID de Usuario
+
+El bot `TelegramSpotiBOT` solo podrá ser ejecutado por un usuario específico. Para asegurarte de que solo tú puedes usarlo:
+
+1.  Obtén tu **ID de Usuario** de Telegram. Una manera fácil es enviarte un mensaje a ti mismo y luego usar un bot como **UserInfoBot** en Telegram para obtener tu ID.
+    
+2.  Abre el archivo `TelegramSpotiBOT.py` y busca la línea en la que se configura `USER_ID` (o algo similar). Inserta tu ID de usuario ahí. Este será el único ID que el bot aceptará.
+    
+
+### 3. Configurar el Token de Telegram
+
+Una vez que tengas el Token de Telegram:
+
+1.  Abre el archivo `TelegramSpotiBOT.py`.
+2.  Busca la línea donde se establece el token y reemplaza `your_telegram_bot_token` con el token que te dio **BotFather**.
+
+`TOKEN = 'your_telegram_bot_token'` 
+
+### 4. Lanzar el Bot
+
+Para lanzar el bot:
+
+1.  Abre una terminal en el directorio donde se encuentra el archivo `TelegramSpotiBOT.py`.
+2.  Ejecuta el siguiente comando:
+
+
+`python TelegramSpotiBOT.py` 
+
+El bot se conectará a Telegram y comenzará a recibir comandos. Asegúrate de que tu ID de usuario esté configurado correctamente, de lo contrario, el bot no responderá a tus comandos.
+
+### 5. Usar el Bot
+Tendrás dependencias casi seguro, así que la primera vez que lo inicies tendrás que resolverlas.
+
+### 6. Usar el Bot
+
+Una vez que el bot esté en ejecución, puedes interactuar con él a través de Telegram. Los comandos disponibles y sus descripciones están listados en el código o en el archivo correspondiente.  
+
 
 ### Troubleshooting
 
@@ -214,4 +263,6 @@ Run the script from the terminal:
 -   To use the "Last 30 Days" option, you must have already synced at least the last 7 or 15 days, otherwise Spotify detects too many requests at once and rejects the request.
     
 -   If you accidentally delete songs or playlists, you can reset everything by deleting the `data` folder (generated when you run the program), and removing the `global_tracks.txt` file.
+-   
+
     
