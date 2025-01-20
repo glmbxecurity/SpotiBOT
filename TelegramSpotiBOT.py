@@ -33,7 +33,7 @@ async def start(update: Update, context):
         await update.message.reply_text("No tienes permiso para usar este bot.")
         return
     
-    await update.message.reply_text("¡Hola! Soy tu bot de Spotify. ¿Cuántos días de novedades quieres ver?")
+    await update.message.reply_text("¡Hola! Soy SpotiBOT, un bot creado por GlmbXecurity. Con este bot puedes actualizar tus playlists de Spotify automáticamente. Actualizaremos las novedades de los ultimos días (Indicar días):")
 
 # Función para manejar el comando que recibe el rango de días
 async def handle_message(update: Update, context):
