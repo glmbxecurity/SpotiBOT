@@ -2,7 +2,7 @@ import logging
 import asyncio
 from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters
-from spotibot import *  # Importamos las funciones de SpotiBOT.py
+from SpotiBOTGUILESS import *  # Importamos las funciones de SpotiBOT.py
 import nest_asyncio  # Necesario para entornos con un event loop ya activo
 import sys
 import os
@@ -13,7 +13,7 @@ logging.basicConfig(format="%(asctime)s - %(name)s - %(levelname)s - %(message)s
 logger = logging.getLogger(__name__)
 
 # Tu ID de usuario de Telegram (obtenido previamente)
-AUTHORIZED_USER_ID = 123456789  # Sustituye este número con tu ID real
+AUTHORIZED_USER_ID = 942135888  # Sustituye este número con tu ID real
 
 # Aplicar nest_asyncio para permitir que asyncio funcione en entornos con bucles de eventos activos
 nest_asyncio.apply()
@@ -131,7 +131,7 @@ def run_spotibot(dias_recientes):
 # Función principal que configura y ejecuta el bot
 async def main():
     # Crea una instancia de la aplicación del bot con tu token
-    application = Application.builder().token("TU TOKEN DE TELEGRAM VA AQUI").build()
+    application = Application.builder().token("7814670578:AAHtGcv8n64KAkODJLf-zP37wc23bIhCfVw").build()
 
     # Añadir manejadores de comandos y mensajes
     application.add_handler(CommandHandler("start", start))
