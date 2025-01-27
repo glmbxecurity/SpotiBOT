@@ -255,6 +255,12 @@ Tendrás dependencias casi seguro, así que la primera vez que lo inicies tendr�
 
 Una vez que el bot esté en ejecución, puedes interactuar con él a través de Telegram. Los comandos disponibles y sus descripciones están listados en el código o en el archivo correspondiente.  
 
+### 7. Dependencias  
+`bash
+pip install python-telegram-bot nest_asyncio spotipy
+`
+    
+
 
 ### Troubleshooting
 
