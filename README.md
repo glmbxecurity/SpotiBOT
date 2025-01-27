@@ -238,13 +238,13 @@ Una vez que tengas el Token de Telegram:
 
 ### 4. Lanzar el Bot
 
-Para lanzar el bot:
+Para lanzar el bot (en segundo plano):
 
 1.  Abre una terminal en el directorio donde se encuentra el archivo `TelegramSpotiBOT.py`.
 2.  Ejecuta el siguiente comando:
 
 
-`python TelegramSpotiBOT.py` 
+`python3 TelegramSpotiBOT.py & nohup` 
 
 El bot se conectará a Telegram y comenzará a recibir comandos. Asegúrate de que tu ID de usuario esté configurado correctamente, de lo contrario, el bot no responderá a tus comandos.
 
