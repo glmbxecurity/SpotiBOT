@@ -132,7 +132,7 @@ def run_spotibot(dias_recientes):
 # Función principal que configura y ejecuta el bot
 async def main():
     # Crea una instancia de la aplicación del bot con tu token
-    application = Application.builder().token("7814670578:AAHtGcv8n64KAkODJLf-zP37wc23bIhCfVw").build()
+    application = Application.builder().token("TU TOKEN DE TELEGRAM").build()
 
     # Añadir manejadores de comandos y mensajes
     application.add_handler(CommandHandler("start", start))
