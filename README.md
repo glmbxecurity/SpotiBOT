@@ -244,7 +244,7 @@ Para lanzar el bot (en segundo plano):
 2.  Ejecuta el siguiente comando:
 
 
-`python3 TelegramSpotiBOT.py & nohup` 
+`nohup python3 TelegramSpotiBOT.py &` 
 
 El bot se conectará a Telegram y comenzará a recibir comandos. Asegúrate de que tu ID de usuario esté configurado correctamente, de lo contrario, el bot no responderá a tus comandos.
 
