@@ -1,7 +1,3 @@
-############### EXPLICACION #################
-# Este script al ejecutarlo, actualiza la musica de los ultimos 7 dias directamente
-# Esto no lanza el bot, solamente hace el trabajo de actualizar
-# Si se mete en una tarea cron, puedes automatizar el proceso de updatear las listas sin necesidad del BOT
 import os
 import datetime
 from datetime import timedelta
@@ -248,14 +244,16 @@ def main():
                 print(f"Agregando {len(unique_tracks)} canciones únicas a la lista semanal '{weekly_playlist_name}'...")
                 track_uris = [track['track']['uri'] for track in unique_tracks if track['track']]
                 try:
-                    sp.playlist_add_items(weekly_playlist_id, track_uris)
+                    # Añadir en bloques de 100 canciones
+                    for i in range(0, len(track_uris), 100):
+                        batch = track_uris[i:i+100]
+                        sp.playlist_add_items(weekly_playlist_id, batch)
                     save_new_tracks(f"data/{genre}_old_tracks.txt", unique_tracks)
                     save_global_tracks([track['track']['id'] for track in unique_tracks])
                 except SpotifyException as e:
                     print(f"Error al agregar canciones a la playlist: {e}")
             else:
                 print("No se encontraron canciones nuevas para agregar.")
-
         set_playlist_image(sp, weekly_playlist_id, genre)
 
     print("\nProceso finalizado.")
