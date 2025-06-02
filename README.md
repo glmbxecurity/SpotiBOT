@@ -7,7 +7,7 @@ SpotiBOT es un bot para Spotify que facilita la gestión automática de playlist
 - **Soporte para imágenes personalizadas**: Ahora puedes añadir una imagen personalizada para tus playlists. La imagen debe tener un tamaño máximo de **500x500 px** y un peso de **100 KB**. Para utilizar una imagen personalizada, simplemente coloca la imagen con el nombre del género (por ejemplo, `rock.jpg`) en la carpeta `images` y el bot la asignará automáticamente.
 - **Creación de playlists por género**: Se ha añadido la opción de crear playlists basadas en géneros musicales. Al ejecutar el bot, puedes indicar un género (por ejemplo, `rock`) y el bot creará una nueva playlist con ese género y añadirá canciones correspondientes a ese estilo.
 - **BOT Telegram**. Bot de telegram para controlar el spotibot instalado en un servidor, de manera que puedas usarlo allá donde vayas.
-- ** Creado spotibot_core_last_7days.py** actualiza directamente los ultimos 7 dias al lanzarlo. si se establece como tarea cron, siempre tendrás la musica a la última
+- **Creado spotibot_core_last_7days.py** actualiza directamente los ultimos 7 dias al lanzarlo. si se establece como tarea cron, siempre tendrás la musica a la última
 ----------
 
 ##### EN
