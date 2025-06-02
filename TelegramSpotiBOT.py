@@ -3,11 +3,11 @@ import logging
 import asyncio
 from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters
-from SpotiBOTGUILESS import *  # Importamos las funciones de SpotiBOT.py
+from spotibot_core import *  # Importamos las funciones de spotibot_core.py
 import nest_asyncio  # Necesario para entornos con un event loop ya activo
 import sys
 import os
-sys.path.append('/root/SpotiBOTGUIless')
+sys.path.append('/root/SpotiBOT')
 
 # Configuración básica de logging
 logging.basicConfig(format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO)
