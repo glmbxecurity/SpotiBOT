@@ -56,8 +56,7 @@ Para usar SpotiBOT, primero necesitas tener Python 3.x (Probado en Python 3.13.0
 Luego debes instalar `spotipy` y `python-dotenv`
 
 ```bash
-pip install spotipy
-pip install python-dotenv
+pip install spotipy python-dotenv python-telegram-bot nest_asyncio
 ``` 
 
 ### 1. Clonar el repositorio
