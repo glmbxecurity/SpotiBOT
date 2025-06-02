@@ -192,6 +192,41 @@ EDITAR /root/SpotiBOT con la ruta donde tengas el bot
 rc-service dcron start
 rc-update add dcron
 ```
+
+### Iniciar BOT con el S.O Alpine Linux
+Suponiendo que el bot está en **/root/SpotiBOT/TelegramSpotiBOT.py**  
+
+
+1. Crea un archivo en /etc/init.d/spotibot con este contenido:
+```bash
+#!/sbin/openrc-run
+
+name="r"
+description="Spotify Telegram Bot"
+
+command="/usr/bin/python3"
+command_args="/root/SpotiBOT/TelegramSpotiBOT.py"
+pidfile="/run/${RC_SVCNAME}.pid"
+command_background=true
+directory="/root/SpotiBOT"
+
+depend() {
+    need net
+    after firewall
+}
+
+start_pre() {
+    checkpath --directory --mode 0755 /run/${RC_SVCNAME}
+}
+```
+2. Iniciar con el equipo:
+```bash
+chmod +x /etc/init.d/spotibot
+rc-update add spotibot default
+rc-service spotibot start
+rc-service spotibot status
+```
+
 ----------
 
 
