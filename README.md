@@ -184,7 +184,8 @@ apk add dcron (esto para alpine linux)
 2. Editar crontab y añadir:
 ```bash
 crontab -e
-0 3 * * * /usr/bin/python3 /root/SpotiBOT/spotibot_core_last_7days.py >> /root/SpotiBOT/cron.log 2>&1
+0 3 * * * cd /root/SpotiBOT && /usr/bin/python3 /root/SpotiBOT/spotibot_core_last_7days.py >> /root/SpotiBOT/cron.log 2>&1
+EDITAR /root/SpotiBOT con la ruta donde tengas el bot
 ```
 3. Iniciar cron y habilitar al inicio (Alpine linux) En debian no es necesario
 ```bash
@@ -361,7 +362,8 @@ apk add dcron  # for Alpine Linux
 
 crontab -e  
 ```bash
-0 3 * * * /usr/bin/python3 /root/SpotiBOT/spotibot_core_last_7days.py >> /root/SpotiBOT/cron.log 2>&1
+0 3 * * * cd /root/SpotiBOT && /usr/bin/python3 /root/SpotiBOT/spotibot_core_last_7days.py >> /root/SpotiBOT/cron.log 2>&1
+EDIT /root/SpotiBOT with yout custom SpotiBOT source
 ```
 3 Start cron and enable it at boot (Alpine Linux). Not needed on Debian:  
 ```bash
