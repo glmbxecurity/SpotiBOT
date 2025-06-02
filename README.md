@@ -24,11 +24,13 @@ SpotiBOT is a Spotify bot that facilitates the automatic management of playlists
 
 ## Tabla de Contenidos en Español
 
--   [Características](#caracter%C3%ADsticas)
--   [Screenshots del programa](#screenshots-del-programa)
--   [Instalación](#instalaci%C3%B3n)
--   [Uso](#uso)
--   [Resolución de problemas](#resolucion-de-problemas)
+- [Características](#características)  
+- [Screenshots del programa](#screenshots-del-programa)  
+- [Instalación](#instalación)  
+- [Uso](#uso)  
+- [Configuración y Uso de TelegramSpotiBOT](#configuración-y-uso-de-telegramspotibot)  
+- [Resolución de problemas](#resolución-de-problemas)  
+- [Automatización diaria con cron](#automatización-diaria-con-cron)
 
 ## Características
 
@@ -116,17 +118,91 @@ Ejecuta el script desde la terminal:
 -   Para ejecutar la opción de "Los últimos 30 días", previamente has de haber sincronizado al menos los últimos 7 o 15 días, sino Spotify detecta muchas requests de una vez y rechaza la petición.
     
 -   Si eliminas canciones por error y no querías, o eliminas la playlist, la manera de corregir y volver a empezar es eliminando la carpeta `data` (se genera al lanzar el programa), y eliminar el fichero `global_tracks.txt`.
+
+      ## Configuración y Uso de TelegramSpotiBOT
+
+### 1. CObtener el Token de Telegram
+
+Para interactuar con la API de Telegram, primero debes obtener el **Token** de tu bot en Telegram:
+
+1.  Abre Telegram y busca el **BotFather**.
+2.  Envía el comando `/newbot` y sigue las instrucciones para crear tu bot.
+3.  Una vez creado, **BotFather** te dará un Token que deberás copiar.
+
+### 2. Configurar el ID de Usuario
+
+El bot `TelegramSpotiBOT` solo podrá ser ejecutado por un usuario específico. Para asegurarte de que solo tú puedes usarlo:
+
+1.  Obtén tu **ID de Usuario** de Telegram. Una manera fácil es enviarte un mensaje a ti mismo y luego usar un bot como **UserInfoBot** en Telegram para obtener tu ID.
+    
+2.  Abre el archivo `TelegramSpotiBOT.py` y busca la línea en la que se configura `USER_ID` (o algo similar). Inserta tu ID de usuario ahí. Este será el único ID que el bot aceptará.
     
 
+### 3. Configurar el Token de Telegram
+
+Una vez que tengas el Token de Telegram:
+
+1.  Abre el archivo `TelegramSpotiBOT.py`.
+2.  Busca la línea donde se establece el token y reemplaza `your_telegram_bot_token` con el token que te dio **BotFather**.
+
+`TOKEN = 'your_telegram_bot_token'` 
+
+### 4. Lanzar el Bot
+
+Para lanzar el bot (en segundo plano):
+
+1.  Abre una terminal en el directorio donde se encuentra el archivo `TelegramSpotiBOT.py`.
+2.  Ejecuta el siguiente comando:
+
+
+`nohup python3 TelegramSpotiBOT.py &` 
+
+El bot se conectará a Telegram y comenzará a recibir comandos. Asegúrate de que tu ID de usuario esté configurado correctamente, de lo contrario, el bot no responderá a tus comandos.
+
+### 5. Usar el Bot
+Tendrás dependencias casi seguro, así que la primera vez que lo inicies tendrás que resolverlas.
+
+### 6. Usar el Bot
+
+Una vez que el bot esté en ejecución, puedes interactuar con él a través de Telegram. Los comandos disponibles y sus descripciones están listados en el código o en el archivo correspondiente.  
+
+### 7. Dependencias  
+`bash
+pip install python-telegram-bot nest_asyncio spotipy
+`
+## Automatización diaria con cron
+
+El script `spotibot_core_last_7days.py` actualiza tus playlists con las canciones nuevas añadidas en los últimos 7 días. Para no tener que ejecutarlo manualmente, puedes automatizarlo con `cron` para que se ejecute una vez al día.
+
+### Cómo configurar la tarea diaria en Alpine Linux:
+
+1. Instala `cron` si no lo tienes:
+
+```bash
+apk add dcron (esto para alpine linux)
+```
+2. Editar crontab y añadir:
+```bash
+crontab -e
+0 3 * * * /usr/bin/python3 /root/SpotiBOT/spotibot_core_last_7days.py >> /root/SpotiBOT/cron.log 2>&1
+```
+3. Iniciar cron y habilitar al inicio (Alpine linux) En debian no es necesario
+```bash
+rc-service dcron start
+rc-update add dcron
+```
 ----------
+
 
 ## Table of Contents in English
 
--   [Features](#features)
--   [Program Screenshots](#program-screenshots)
--   [Installation](#installation)
--   [Usage](#usage)
--   [Troubleshooting](#troubleshooting)
+- [Features](#features)  
+- [Program Screenshots](#program-screenshots)  
+- [Installation](#installation)  
+- [Usage](#usage)  
+- [TelegramSpotiBOT Setup and Usage](#telegramspotibot-setup-and-usage)  
+- [Troubleshooting](#troubleshooting)  
+- [Daily Automation with cron](#daily-automation-with-cron) 
 
 ## Features
 
@@ -207,58 +283,6 @@ Once everything is configured, you can run the script for SpotiBOT to collect ne
 Run the script from the terminal:
 
 `python SpotiBOT.py`  
-
-## Configuración y Uso de TelegramSpotiBOT
-
-### 1. CObtener el Token de Telegram
-
-Para interactuar con la API de Telegram, primero debes obtener el **Token** de tu bot en Telegram:
-
-1.  Abre Telegram y busca el **BotFather**.
-2.  Envía el comando `/newbot` y sigue las instrucciones para crear tu bot.
-3.  Una vez creado, **BotFather** te dará un Token que deberás copiar.
-
-### 2. Configurar el ID de Usuario
-
-El bot `TelegramSpotiBOT` solo podrá ser ejecutado por un usuario específico. Para asegurarte de que solo tú puedes usarlo:
-
-1.  Obtén tu **ID de Usuario** de Telegram. Una manera fácil es enviarte un mensaje a ti mismo y luego usar un bot como **UserInfoBot** en Telegram para obtener tu ID.
-    
-2.  Abre el archivo `TelegramSpotiBOT.py` y busca la línea en la que se configura `USER_ID` (o algo similar). Inserta tu ID de usuario ahí. Este será el único ID que el bot aceptará.
-    
-
-### 3. Configurar el Token de Telegram
-
-Una vez que tengas el Token de Telegram:
-
-1.  Abre el archivo `TelegramSpotiBOT.py`.
-2.  Busca la línea donde se establece el token y reemplaza `your_telegram_bot_token` con el token que te dio **BotFather**.
-
-`TOKEN = 'your_telegram_bot_token'` 
-
-### 4. Lanzar el Bot
-
-Para lanzar el bot (en segundo plano):
-
-1.  Abre una terminal en el directorio donde se encuentra el archivo `TelegramSpotiBOT.py`.
-2.  Ejecuta el siguiente comando:
-
-
-`nohup python3 TelegramSpotiBOT.py &` 
-
-El bot se conectará a Telegram y comenzará a recibir comandos. Asegúrate de que tu ID de usuario esté configurado correctamente, de lo contrario, el bot no responderá a tus comandos.
-
-### 5. Usar el Bot
-Tendrás dependencias casi seguro, así que la primera vez que lo inicies tendrás que resolverlas.
-
-### 6. Usar el Bot
-
-Una vez que el bot esté en ejecución, puedes interactuar con él a través de Telegram. Los comandos disponibles y sus descripciones están listados en el código o en el archivo correspondiente.  
-
-### 7. Dependencias  
-`bash
-pip install python-telegram-bot nest_asyncio spotipy
-`
     
 
 
@@ -271,26 +295,76 @@ pip install python-telegram-bot nest_asyncio spotipy
 -   If you accidentally delete songs or playlists, you can reset everything by deleting the `data` folder (generated when you run the program), and removing the `global_tracks.txt` file.
 -   
 
-    
-## Automatización diaria con cron
+## TelegramSpotiBOT Setup and Usage
+### 1. Obtain the Telegram Token  
 
-El script `spotibot_core_last_7days.py` actualiza tus playlists con las canciones nuevas añadidas en los últimos 7 días. Para no tener que ejecutarlo manualmente, puedes automatizarlo con `cron` para que se ejecute una vez al día.
+To interact with the Telegram API, you first need to get the Token for your bot in Telegram:    
 
-### Cómo configurar la tarea diaria en Alpine Linux:
+    1. Open Telegram and search for BotFather.  
 
-1. Instala `cron` si no lo tienes:
+    2. Send the command /newbot and follow the instructions to create your bot.  
 
+    3. Once created, BotFather will give you a Token that you should copy.  
+
+### 2. Configure the User ID
+
+The TelegramSpotiBOT bot can only be run by a specific user. To make sure only you can use it:  
+
+    1. Get your Telegram User ID. An easy way is to send a message to yourself and then use a bot like UserInfoBot on Telegram to get your ID.  
+
+    2.  Open the file TelegramSpotiBOT.py and find the line where USER_ID (or something similar) is set. Insert your user ID there. This will be the only ID that the bot will accept.  
+
+### 3. Configure the Telegram Token
+
+Once you have the Telegram Token:  
+
+    1. Open the file TelegramSpotiBOT.py.  
+
+    2. Find the line where the token is set and replace your_telegram_bot_token with the token you got from BotFather.  
+
+TOKEN = 'your_telegram_bot_token'
+### 4. Launch the Bot
+
+To launch the bot (in the background):  
+
+    1. Open a terminal in the directory where TelegramSpotiBOT.py is located.
+
+    2. Run the following command:
 ```bash
-apk add dcron (esto para alpine linux)
+nohup python3 TelegramSpotiBOT.py &
 ```
-2. Editar crontab y añadir:
+The bot will connect to Telegram and start receiving commands. Make sure your user ID is correctly configured, otherwise the bot won’t respond to your commands.
+### 5. Using the Bot
+
+You will likely have dependencies, so the first time you run it you’ll need to resolve those.
+### 6. Using the Bot
+
+Once the bot is running, you can interact with it through Telegram. Available commands and their descriptions are listed in the code or the corresponding file.
+### 7. Dependencies
+
+Run this to install needed packages:
+```python
+pip install python-telegram-bot nest_asyncio spotipy
+```
+## Daily Automation with cron
+
+The script `spotibot_core_last_7days.py` updates your playlists with new songs added in the last 7 days. To avoid running it manually, you can automate it with `cron` to run once a day.  
+
+### How to set up the daily task on Alpine Linux:
+
+1. Install `cron` if you don't have it:
+
 ```bash
-crontab -e
+apk add dcron  # for Alpine Linux
+```
+2. Edit the crontab and add the following line:  
+
+crontab -e  
+```bash
 0 3 * * * /usr/bin/python3 /root/SpotiBOT/spotibot_core_last_7days.py >> /root/SpotiBOT/cron.log 2>&1
 ```
-3. Iniciar cron y habilitar al inicio (Alpine linux) En debian no es necesario
+3 Start cron and enable it at boot (Alpine Linux). Not needed on Debian:  
 ```bash
 rc-service dcron start
 rc-update add dcron
 ```
-    
