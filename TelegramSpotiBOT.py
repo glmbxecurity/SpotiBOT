@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+############# EXPLICACION ##############
+# ESTO ES EL BOT COMO TAL PARA TELEGRAM, el que tiene los comandos e interactua con spotibot_core.py que es el que realmente tiene las instrucciones para actualizar las listas
+# debes EDITAR el AUTHORIZED_USER_ID y el token
 import logging
 import asyncio
 from telegram import Update
